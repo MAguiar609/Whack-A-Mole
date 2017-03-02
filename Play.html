@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Melissa's Whack A Mole</title>
+    <link rel="stylesheet" href="stylesheets/whackthatmole.css" />
+    <link rel="stylesheet" href="stylesheets/normalize.css" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="scoreBoard">
+            <h1>Whack A Mole</h1>
+
+            <div class="scoreHolder">
+                <div class="scoreDisplay">
+                    <div class="label">Your Score</div>
+                    <div id="playerScore" class="score">0</div>
+                </div>
+            </div>
+            <div class="scoreHolder">
+                <p>To Win: Get to 20 points!</p>
+                <button style="margin:0 auto;" onclick="startWhackingMoles()">Start Game</button>
+            </div>
+        </div>
+        <div class="gameBoard">
+            <div class="gameSquare">
+                <div id="1" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="2" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="3" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="4" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="5" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="6" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="7" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="8" class="moleHole"></div>
+            </div>
+            <div class="gameSquare">
+                <div id="9" class="moleHole"></div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        var playerScoreHolder = document.getElementById('playerScore');
+        var mlayerScoreHolder = document.getElementById("moleScore");
+        var playerScore = 0;
+        var moleScore = 0;
+        var moleHole = document.getElementsByClassName("moleHole");
+        var howManyMoleHoles = 9;
+        var shouldIStop = false;
+        var moleTimer;
+        var winningScore = 20;
+        var thePokedMoleHole = function () {
+            var isItOn = this.classList.contains('moleShow');
+            if (isItOn == true) {
+                this.classList = "moleHole";
+                playerScore = playerScore + 1;
+                playerScoreHolder.innerHTML = playerScore;
+                if (playerScore == winningScore) {
+                    alert("Great Job!");
+                    shouldIStop = true;
+                    clearInterval(moleTimer);
+                    resetMoles();
+                }
+            }
+
+        };
+
+        for (var i = 0; i < moleHole.length; i++) {
+            moleHole[i].addEventListener('click', thePokedMoleHole, false);
+        }
+
+        function startWhackingMoles() {
+
+            setRandomClass();
+            moleTimer = setInterval(function () {
+                setRandomClass();
+            }, 1000);
+        }
+
+        function setRandomClass() {
+            resetMoles();
+            var moleMath1 = Math.floor((Math.random() * howManyMoleHoles));
+            var moleMath2 = Math.floor((Math.random() * howManyMoleHoles));
+            document.getElementById(moleMath1).classList = "moleHole moleShow";
+            document.getElementById(moleMath2).classList = "moleHole moleShow";
+        }
+        function resetMoles() {
+            for (var i = 0; i < moleHole.length; i++) {
+                moleHole[i].classList = "moleHole";
+            }
+        }
+    </script>
+</body>
+
+</html>
